@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %d{HH:mm:ss.SSS} %highlight(%-5level) %-70(%logger{15}.%M) - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
+
+    <appender name="DEBUG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>logs/debug_%d{yyyy-MM-dd}_%i.log</fileNamePattern>
+            <!-- each file should be at most 1MB, keep 3 days worth of history, but at most 5MB -->
+            <maxFileSize>1MB</maxFileSize>
+            <maxHistory>3</maxHistory>
+            <totalSizeCap>5MB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d %-5p %-70(%logger{15}.%M) - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.codestalker404.cucumber.gherkin_test" level="debug" additivity="false">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="DEBUG_FILE"/>
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>

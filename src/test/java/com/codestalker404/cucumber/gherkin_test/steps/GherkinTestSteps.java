@@ -1,10 +1,10 @@
 package com.codestalker404.cucumber.gherkin_test.steps;
 
 import com.codestalker404.cucumber.gherkin_test.pojos.Credentials;
-import io.cucumber.datatable.DataTable;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import cucumber.api.DataTable;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +29,7 @@ public class GherkinTestSteps {
     @When("^I fill my Credentials objects using lists$")
     public void iFillMyCredentialsObjectsUsingLists(DataTable dataTable) {
         //TODO fill objects
-        List<List<String>> tableList = dataTable.asLists();
+        List<List<String>> tableList = dataTable.asLists(String.class);
         LOGGER.info("Table={}", tableList);
 
         for(int i = 0; i < tableList.size(); i++) {
@@ -52,6 +52,15 @@ public class GherkinTestSteps {
             LOGGER.info("Row {}={}", i, row);
             LOGGER.info("User='{}'", row.get("user"));
             LOGGER.info("Password='{}'", row.get("password"));
+        }
+    }
+
+    @When("^I fill my Credentials objects using a single list$")
+    public void iFillMyCredentialsObjectsUsingTransformers(DataTable dataTable) {
+        List<Credentials> tableList = dataTable.asList(Credentials.class);
+
+        for(Credentials credentials : tableList) {
+            LOGGER.info("{}", credentials);
         }
     }
 
